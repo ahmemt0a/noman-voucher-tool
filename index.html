@@ -3,63 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Community Voucher Generator</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
-        .controls { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; max-width: 800px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        input, select { padding: 8px; margin: 5px; width: 250px; }
-        button { padding: 10px 20px; background: #2c3e50; color: white; border: none; cursor: pointer; border-radius: 4px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; padding: 40px; }
+        .input-panel { background: white; padding: 25px; border-radius: 12px; max-width: 800px; margin: 0 auto 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .input-group { margin-bottom: 15px; display: flex; gap: 10px; }
+        input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+        button { padding: 12px 25px; background: #1a73e8; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
+        button:hover { background: #1557b0; }
         
-        /* The Voucher Design */
-        #voucher-template {
-            width: 800px; height: 500px; background: white; border: 2px solid #333;
-            padding: 30px; position: relative; color: #333; margin: 0 auto;
+        #voucher-print-area {
+            width: 800px; min-height: 450px; background: white; border: 1px solid #000;
+            padding: 40px; margin: 0 auto; position: relative; color: #000; box-sizing: border-box;
         }
-        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #333; padding-bottom: 10px; }
-        .title { text-align: center; margin-top: 10px; }
-        .amount-box { position: absolute; top: 110px; right: 40px; border: 2px solid #333; padding: 10px 20px; font-weight: bold; font-size: 20px; }
-        .row { display: flex; justify-content: space-between; margin-top: 25px; border-bottom: 1px dotted #ccc; padding-bottom: 5px; }
-        .footer { display: flex; justify-content: space-between; margin-top: 80px; border-top: 2px solid #333; padding-top: 10px; text-align: center; font-size: 12px; }
-        .rtl { direction: rtl; font-family: 'Courier New', Courier, monospace; }
+        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px; }
+        .title-section { text-align: center; margin-bottom: 30px; }
+        .amount-box { position: absolute; top: 120px; right: 40px; border: 2px solid #000; padding: 10px 25px; font-size: 24px; font-weight: bold; }
+        .field-row { display: flex; justify-content: space-between; margin-top: 35px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        .rtl { direction: rtl; font-family: Arial, sans-serif; font-weight: bold; }
+        .footer { display: flex; justify-content: space-between; margin-top: 100px; text-align: center; font-size: 13px; font-weight: bold; }
+        
+        @media print {
+            .input-panel, button { display: none !important; }
+            body { background: white; padding: 0; }
+            #voucher-print-area { border: none; width: 100%; }
+        }
     </style>
 </head>
 <body>
 
-<div class="controls">
-    <h3>Voucher Input</h3>
-    <input type="text" id="v_num" placeholder="Voucher # (e.g. 2,230)">
-    <input type="text" id="v_name" placeholder="Received From Mr.">
-    <input type="text" id="v_sum" placeholder="The Sum Of (In Words)">
-    <input type="text" id="v_for" placeholder="For / مقابل">
-    <button onclick="generatePDF()">Download Editable PDF</button>
+<div class="input-panel">
+    <h2 style="margin-top:0">Voucher Details</h2>
+    <div class="input-group">
+        <input type="text" id="in_num" placeholder="Voucher No (e.g. 2,230)" oninput="update()">
+        <input type="text" id="in_name" placeholder="Received From Mr." oninput="update()">
+    </div>
+    <div class="input-group">
+        <input type="text" id="in_sum" placeholder="The Sum Of (In Words)" oninput="update()">
+        <input type="text" id="in_for" placeholder="For / وذلك مقابل" oninput="update()">
+    </div>
+    <button onclick="window.print()">Print / Save as PDF</button>
 </div>
 
-<div id="voucher-template">
+<div id="voucher-print-area">
     <div class="header">
-        <div><strong># <span id="out_num">2,230</span></strong></div>
+        <div><strong>Voucher: #<span id="out_num">0000</span></strong></div>
         <div class="rtl">مانيلا للبصريات<br>س. ت : 2051235564</div>
     </div>
 
-    <div class="title">
-        <h2 style="margin:0;">سند قبض</h2>
-        <h3 style="margin:0;">Received Voucher</h3>
+    <div class="title-section">
+        <h1 style="margin:0; font-size: 28px;">سند قبض</h1>
+        <h2 style="margin:0; font-size: 20px; font-weight: normal;">Received Voucher</h2>
     </div>
 
-    <div class="amount-box">﷼ <span id="out_amount">2,230</span></div>
+    <div class="amount-box">﷼ <span id="out_amt">0.00</span></div>
 
-    <div class="row">
-        <span>Received From Mr. <strong id="out_name">................</strong></span>
-        <span class="rtl">استلمنا من</span>
+    <div class="field-row">
+        <span>Received From Mr. <strong id="out_name">............................</strong></span>
+        <span class="rtl">استلمنا من السيد</span>
     </div>
 
-    <div class="row">
-        <span>The Sum Of <strong id="out_sum">................</strong></span>
+    <div class="field-row">
+        <span>The Sum Of <strong id="out_sum">............................</strong></span>
         <span class="rtl">مبلغاً وقدره</span>
     </div>
 
-    <div class="row">
-        <span>For <strong id="out_for">................</strong></span>
+    <div class="field-row">
+        <span>For <strong id="out_for">............................</strong></span>
         <span class="rtl">وذلك مقابل</span>
     </div>
 
@@ -71,22 +80,12 @@
 </div>
 
 <script>
-    function generatePDF() {
-        // Sync inputs to template
-        document.getElementById('out_num').innerText = document.getElementById('v_num').value;
-        document.getElementById('out_amount').innerText = document.getElementById('v_num').value;
-        document.getElementById('out_name').innerText = document.getElementById('v_name').value;
-        document.getElementById('out_sum').innerText = document.getElementById('v_sum').value;
-        document.getElementById('out_for').innerText = document.getElementById('v_for').value;
-
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF('l', 'px', [842, 595]); // Landscape
-
-        html2canvas(document.querySelector("#voucher-template")).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            doc.addImage(imgData, 'PNG', 20, 20, 800, 500);
-            doc.save("Voucher.pdf");
-        });
+    function update() {
+        document.getElementById('out_num').innerText = document.getElementById('in_num').value || '0000';
+        document.getElementById('out_amt').innerText = document.getElementById('in_num').value || '0.00';
+        document.getElementById('out_name').innerText = document.getElementById('in_name').value || '............................';
+        document.getElementById('out_sum').innerText = document.getElementById('in_sum').value || '............................';
+        document.getElementById('out_for').innerText = document.getElementById('in_for').value || '............................';
     }
 </script>
 
