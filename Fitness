@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Male Fitness Classes</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Montserrat', 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(circle at center, #1e222b 0%, #0d0f13 100%);
+            color: #ffffff;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 2.5vh 3vw;
+            position: relative;
+        }
+        /* Geometric Active Accents */
+        body::before {
+            content: "";
+            position: absolute;
+            top: -10%;
+            left: -5%;
+            width: 40%;
+            height: 35%;
+            background: linear-gradient(135deg, rgba(255, 76, 41, 0.15), transparent);
+            transform: skewX(-20deg);
+            z-index: 1;
+        }
+        body::after {
+            content: "";
+            position: absolute;
+            bottom: -10%;
+            right: -5%;
+            width: 45%;
+            height: 40%;
+            background: linear-gradient(135deg, transparent, rgba(0, 221, 255, 0.1));
+            transform: skewX(-20deg);
+            z-index: 1;
+        }
+        /* Header styling */
+        header {
+            text-align: center;
+            margin-bottom: 2vh;
+            z-index: 2;
+        }
+        h1 {
+            font-size: 3.2vw;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #ff4c29, #00ddff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            font-size: 1.2vw;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 0.5vh;
+        }
+        /* Main Schedule Table Container */
+        .grid-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 0.8fr 1.4fr 1.4fr 1.4fr;
+            gap: 1vw;
+            z-index: 2;
+            height: 80vh;
+        }
+        /* Column Headers */
+        .col-header {
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 3px solid #ff4c29;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4vw;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 1vh;
+            border-radius: 6px 6px 0 0;
+        }
+        .col-header.location {
+            border-bottom: 3px solid #00ddff;
+            background: linear-gradient(180deg, rgba(0, 221, 255, 0.05) 0%, transparent 100%);
+        }
+        /* Grid Rows & Cells */
+        .day-label {
+            background: rgba(255, 76, 41, 0.1);
+            border-left: 4px solid #ff4c29;
+            font-weight: 700;
+            font-size: 1.3vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            border-radius: 4px;
+        }
+        .class-cell {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            padding: 0.8vh 1vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.4vh;
+        }
+        /* Individual Class Items */
+        .class-item {
+            font-size: 0.95vw;
+            line-height: 1.3;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.3vh;
+            margin-bottom: 0.3vh;
+        }
+        .class-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .class-name {
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .class-time {
+            color: #00ddff;
+            font-size: 0.85vw;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Male Fitness Classes</h1>
+        <div class="subtitle">Fitness & Wellness • June 2026</div>
+    </header>
+
+    <div class="grid-container">
+        <div class="col-header">Days</div>
+        <div class="col-header location">Al Farhah Gym</div>
+        <div class="col-header location">Al Sa'adah Gym</div>
+        <div class="col-header location">CrossFit Studio</div>
+
+        <div class="day-label">Sun</div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">Functional Fit</span><br><span class="class-time">05:30 - 06:30 AM</span></div>
+            <div class="class-item"><span class="class-name">Gym Circuit</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+            <div class="class-item"><span class="class-name">Gym Circuit</span><br><span class="class-time">06:30 - 07:30 PM</span></div>
+        </div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">Sweat & Burn</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+            <div class="class-item"><span class="class-name">HIIT</span><br><span class="class-time">06:30 - 07:15 PM</span></div>
+            <div class="class-item"><span class="class-name">Total Abs</span><br><span class="class-time">07:15 - 07:45 PM</span></div>
+        </div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">CrossHiit</span><br><span class="class-time">11:30 AM - 05:30 PM</span></div>
+            <div class="class-item"><span class="class-name">MetCon</span><br><span class="class-time">04:30 - 05:15 PM</span></div>
+        </div>
+
+        <div class="day-label">Mon</div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">HIIT</span><br><span class="class-time">05:30 - 06:30 AM</span></div>
+            <div class="class-item"><span class="class-name">Functional Fit</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+            <div class="class-item"><span class="class-name">Gym Circuit</span><br><span class="class-time">04:30 - 05:15 PM</span></div>
+        </div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">Gym Circuit</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+            <div class="class-item"><span class="class-name">HIIT</span><br><span class="class-time">06:30 - 07:00 PM</span></div>
+        </div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">CrossHiit</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+        </div>
+
+        <div class="day-label">Tue</div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">Functional Fit</span><br><span class="class-time">05:30 - 06:30 AM</span></div>
+            <div class="class-item"><span class="class-name">Gym Circuit</span><br><span class="class-time">04:30 - 05:15 PM</span></div>
+        </div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">Sweat & Burn</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+            <div class="class-item"><span class="class-name">HIIT</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+            <div class="class-item"><span class="class-name">Gym Circuit</span><br><span class="class-time">06:30 - 07:15 PM</span></div>
+            <div class="class-item"><span class="class-name">Total Abs</span><br><span class="class-time">07:15 - 07:45 PM</span></div>
+        </div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">A.M.R.A.P</span><br><span class="class-time">04:30 - 05:15 PM</span></div>
+        </div>
+
+        <div class="day-label">Wed</div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">Gym Circuit</span><br><span class="class-time">05:30 - 06:30 AM</span></div>
+            <div class="class-item"><span class="class-name">HIIT</span><br><span class="class-time">04:30 - 05:15 PM</span></div>
+        </div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">Functional Fit</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+            <div class="class-item"><span class="class-name">Gym Circuit</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+            <div class="class-item"><span class="class-name">Core & Stretch Blaster</span><br><span class="class-time">06:30 - 07:00 PM</span></div>
+        </div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">CrossHiit</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+        </div>
+
+        <div class="day-label">Thu</div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">Functional Fit</span><br><span class="class-time">05:30 - 06:30 AM</span></div>
+            <div class="class-item"><span class="class-name">Sweat & Burn</span><br><span class="class-time">06:30 - 07:15 PM</span></div>
+        </div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">Gym Circuit</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+            <div class="class-item"><span class="class-name">HIIT</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+            <div class="class-item"><span class="class-name">Gym Circuit</span><br><span class="class-time">06:30 - 07:15 PM</span></div>
+        </div>
+        <div class="class-cell">
+            <div class="class-item"><span class="class-name">CrossHiit</span><br><span class="class-time">11:45 AM - 12:30 PM</span></div>
+            <div class="class-item"><span class="class-name">MetCon</span><br><span class="class-time">04:30 - 05:15 PM</span></div>
+        </div>
+    </div>
+
+</body>
+</html>
